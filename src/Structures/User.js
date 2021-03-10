@@ -7,6 +7,7 @@ module.exports = class User {
         this.id = data.id
         this.avatar = data.avatar
         this.creatAt = new Date(Math.floor(this.id / 4194304) + 1420070400000)
+        this.bot = data.bot
     }
 
     get username(){

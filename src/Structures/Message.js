@@ -8,7 +8,7 @@ module.exports = class Message {
         this.id = data.id
         this.subject = data.content
         this.guild = client.guilds.get(data.guild_id)
-        this.user = client.users.get(data.author.id)
+        this.user = data.author ? client.users.get(data.author.id) : undefined
         this.member = data.member ? this.guild.members.get(data.author.id) : null
         this.channel = client.channels.get(data.channel_id)
     }
