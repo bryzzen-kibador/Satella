@@ -30,6 +30,12 @@ module.exports = class WebSocketManager {
                         }
                     }
                 }))
+
+                this.lastheatSent = Date.now()
+                this.ws.send(JSON.stringify({
+                    op: 1,
+                    d: null
+                }))
         })
 
         this.ws.on("error", async (err) => {

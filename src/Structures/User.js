@@ -6,8 +6,11 @@ module.exports = class User {
         this.flags = data.public_flags
         this.id = data.id
         this.avatar = data.avatar
-        this.creatAt = new Date(Math.floor(this.id / 4194304) + 1420070400000)
-        this.bot = data.bot
+        this.bot = data.bot || false
+    }
+
+    get creatAt(){
+        return new Date(Math.floor(this.id / 4194304) + 1420070400000)
     }
 
     get username(){
