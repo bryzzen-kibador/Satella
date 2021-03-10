@@ -36,8 +36,7 @@ module.exports = class Guild {
                 "User-Agent": userAgent,
                 "Content-Type": "application/json"
             }
-        }).then(res => res.json())
-        .then(res => {console.log(res)})
+        })
 
     }
 }
