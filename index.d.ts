@@ -8,6 +8,10 @@ declare namespace Satella {
            messagesCache: number
        }
 
+       export class WebSocket {
+           ping: number
+       }
+
        interface Events<T> {
           (event: "ready", func: () => void): T;
           (event: "MessageSent", func: (arg0: Message) => void): T;
@@ -186,6 +190,7 @@ declare namespace Satella {
            guilds: Chest<Guild>
            roles: Chest<Role>
            emojis: Chest<Emoji>
+           ws: WebSocket
        }
 }
 
