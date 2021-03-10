@@ -8,7 +8,7 @@ declare namespace Satella {
            messagesCache: number
        }
 
-       export class WebSocket {
+       class WebSocket {
            ping: number
        }
 
@@ -153,7 +153,7 @@ declare namespace Satella {
            required: boolean
        }
 
-       export class SlashCommands {
+       class SlashCommands {
            name: string
            description: string
            options: SlashOptions[]
