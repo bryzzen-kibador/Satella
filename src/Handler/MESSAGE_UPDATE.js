@@ -8,5 +8,5 @@ module.exports = async (client, payload) => {
 
     const messageNew = channel.messages.get(payload.d.id)
 
-    client.emit("MessageEdit", messageNew._data.content);
+    client.emit("MessageEdit", (message, messageNew));
 }
