@@ -23,4 +23,27 @@ ________________
 <br />
 <br />
 
+## Example
+
+```js
+const {Client} = require("satella")
+
+const client = new Client()
+
+client.on("ready", () => {
+    console.log(client.user.username)
+})
+
+client.on("MessageSent", async (message) => {
+    if(message.subject.startsWith("..ping")){
+      return message.reply(~~(client.ws.ping)+"ms")
+    }
+})
+
+client.login("TOKEN")
+```
+
+<br />
+<br />
+
 ## Still in production!

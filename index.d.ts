@@ -8,7 +8,7 @@ declare namespace Satella {
            messagesCache: number
        }
 
-       export class WebSocket {
+       class WebSocket {
            ping: number
        }
 
@@ -18,7 +18,7 @@ declare namespace Satella {
           (event: "NewGuild", func: (arg0: Guild) => void): T;
           (event: "InteractionCreate", func: (arg0: Interaction) => void): T;
           (event: "MessageDelete", func: (arg0: Message) => void): T;
-          (event: "MessageEdit", func: (arg0: Message) => void): T;
+          (event: "MessageEdit", func: (arg0: Message, arg1: Message) => void): T;
        }
 
        interface Guild {
@@ -154,7 +154,7 @@ declare namespace Satella {
            required: boolean
        }
 
-       export class SlashCommands {
+       class SlashCommands {
            name: string
            description: string
            options: SlashOptions[]
