@@ -8,6 +8,5 @@ module.exports = async (client, payload) => {
 
   const messageNew = channel.messages.get(payload.d.id);
 
-  // eslint-disable-next-line no-underscore-dangle
-  client.emit('MessageEdit', messageNew._data.content);
+  client.emit('MessageEdit', (message, messageNew));
 };

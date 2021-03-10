@@ -17,7 +17,6 @@ module.exports = class WebSocketManager {
 
     this.ws = new WebSocket(this.url);
 
-<<<<<<< HEAD
     this.ws.on('open', async () => {
       this.ws.send(JSON.stringify({
         op: 2,
@@ -31,29 +30,13 @@ module.exports = class WebSocketManager {
           },
         },
       }));
-    });
-=======
-        this.ws.on("open", async () => {
-                this.ws.send(JSON.stringify({
-                    "op": 2,
-                    "d": {
-                        "token": token,
-                        "intents": this.intents,
-                        "properties": {
-                            "$os": process.platform,
-                            "$browser": "Satella",
-                            "$device": "Satella"
-                        }
-                    }
-                }))
 
-                this.lastheatSent = Date.now()
-                this.ws.send(JSON.stringify({
-                    op: 1,
-                    d: null
-                }))
-        })
->>>>>>> 55b23dfca402e9bcc2fd48da1d74dad043ecfa43
+      this.lastheatSent = Date.now();
+      this.ws.send(JSON.stringify({
+        op: 1,
+        d: null,
+      }));
+    });
 
     this.ws.on('error', async (err) => {
       console.log(err);
@@ -80,11 +63,10 @@ module.exports = class WebSocketManager {
         case 0:
           this.seq = s;
           try {
-            // eslint-disable-next-line import/no-dynamic-require
             const handler = require(`../Handler/${event}.js`);
             handler(this.client, payload);
           } catch (e) {
-            console.log(e);
+            // console.log(e)
           }
           break;
         case 9:
