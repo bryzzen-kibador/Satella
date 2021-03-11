@@ -34,6 +34,12 @@ declare namespace Satella {
            channels: Chest<Channel>
            createSlashCommand(data: SlashCommands): Interaction;
        }
+       
+       interface InteractionOptions {
+           value: string,
+           type: number,
+           name: string
+       }
 
        interface Interaction {
            type: number
@@ -43,6 +49,7 @@ declare namespace Satella {
            interactionId: string
            interactionToken: string
            reply(subect: string | Embed): Promise<void>
+           options: InteractionOptions[]
        }
 
        interface ClientUser {

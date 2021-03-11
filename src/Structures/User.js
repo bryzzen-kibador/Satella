@@ -5,6 +5,7 @@ module.exports = class User {
     this.flags = data.public_flags;
     this.id = data.id;
     this.avatar = data.avatar;
+    this.bot = data.bot || false
   }
 
   get username() {

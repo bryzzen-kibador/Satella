@@ -10,6 +10,9 @@ module.exports = class Interaction {
     this.name = data.data.name;
     this.interactionToken = data.token;
     this._client = client;
+    if(data.data.options){
+      this.options = data.data.options
+    }
   }
 
   async reply(subject) {
