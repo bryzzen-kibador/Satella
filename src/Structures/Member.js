@@ -1,4 +1,4 @@
-const { Chest } = require("../..")
+const Chest = require("../Utils/Chest")
 const Role = require("./Role")
 
 module.exports = class Member{

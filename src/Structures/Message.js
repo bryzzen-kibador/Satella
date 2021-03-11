@@ -1,5 +1,8 @@
+const Mentions = require("./Mentions")
+
 module.exports = class Message {
     constructor(client, data) {
+        //console.log(data)
         this._client = client
         this._data = data
         this.pinned = data.pinned
@@ -15,6 +18,8 @@ module.exports = class Message {
             
         }
         this.channel = client.channels.get(data.channel_id)
+
+        this.mentions = new Mentions(client, data)
     }
 
     async reply(subject) {
