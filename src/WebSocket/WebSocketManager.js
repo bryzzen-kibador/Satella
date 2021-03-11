@@ -1,4 +1,6 @@
+/* eslint-disable prefer-const */
 const WebSocket = require('ws');
+const zlib = require("zlib-sync")
 
 module.exports = class WebSocketManager {
   constructor(client, intents) {
@@ -43,10 +45,16 @@ module.exports = class WebSocketManager {
     });
 
         this.ws.on("message", async (msg) => {
+            /*let i = new zlib.Inflate()
+            i.push(msg)
+
+            console.log(i.result)
+
+            const payload = String(i.result)*/
+
             const payload = JSON.parse(msg.toString())
 
             const { t: event, op, d, s } = payload
-            //console.log(payload)
 
             switch (op) {
                 case 10:
