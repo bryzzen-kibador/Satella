@@ -20,6 +20,7 @@ declare namespace Satella {
           (event: "MessageDelete", func: (arg0: Message) => void): T;
           (event: "MessageEdit", func: (arg0: Message, arg1: Message) => void): T;
           (event: "ExitGuild", func: (arg0: Guild) => void): T;
+          (event: "MemberRemove", func: (arg0: Member) => void): T;
        }
 
        interface Guild {

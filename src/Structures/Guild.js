@@ -1,3 +1,5 @@
+/* eslint-disable space-infix-ops */
+/* eslint-disable prefer-template */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable no-dupe-class-members */
 /* eslint-disable padded-blocks */
@@ -54,12 +56,13 @@ module.exports = class Guild {
       fetch(url, {
         method: "DELETE",
         headers: {
-          "Authorization": this._client.token,
+          "Authorization": "Bot " + this._client.token,
           "User-Agent": userAgent,
           'Content-Type': 'application/json'
         }
       }).then(res => {
-        if(!res.status === 204) throw new Error("An error has happened!")
+        if(res.status !== 204) throw new Error("An error has happened!")
+        resolve(null)
       })
     })
   }
@@ -75,12 +78,13 @@ module.exports = class Guild {
         method: "PUT",
         body: JSON.stringify({reason: reason || ""}),
         headers: {
-          "Authorization": this._client.token,
+          "Authorization": "Bot "+this._client.token,
           "User-Agent": userAgent,
           'Content-Type': 'application/json'
         }
       }).then(res => {
-        if(!res.status === 204) throw new Error("An error has happened!")
+        if(res.status !== 204) throw new Error("An error has happened!")
+        resolve(null)
       })
     })
   }
