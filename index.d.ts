@@ -3,6 +3,9 @@ import events from "events"
 declare function Satella(options?: Satella.ClientOptions): Satella.Client;
 
 declare namespace Satella {
+
+       export let version: string
+
        interface ClientOptions {
            intents: number;
            messagesCache: number
