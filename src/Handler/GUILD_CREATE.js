@@ -10,12 +10,6 @@ const User = require('../Structures/User');
 
 module.exports = async (client, payload) => {
   const guild = new Guild(client, payload.d);
-  if (client._guilds.includes(payload.d.id)) {
-    client.guilds.set(guild.id, guild);
-  } else {
-    client.guilds.set(guild.id, guild);
-    client.emit('NewGuild', guild);
-  }
 
   const { d } = payload;
 
@@ -42,4 +36,11 @@ module.exports = async (client, payload) => {
     const user = new User(client, e.user);
     client.users.set(user.id, user);
   });
+
+  if (client._guilds.includes(payload.d.id)) {
+    client.guilds.set(guild.id, guild);
+  } else {
+    client.guilds.set(guild.id, guild);
+    client.emit('NewGuild', guild);
+  }
 };
