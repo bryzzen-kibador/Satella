@@ -51,7 +51,7 @@ module.exports = class Message {
         },
       }).then((res) => res.json())
         .then((json) => {
-          if (json.message) return new Error(json.message);
+          if (json.message) throw new Error(json.message);
           const msg = new Message(this._client, json);
           resolve(msg);
         });

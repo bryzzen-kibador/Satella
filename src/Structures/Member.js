@@ -1,3 +1,5 @@
+/* eslint-disable prefer-const */
+/* eslint-disable class-methods-use-this */
 /* eslint-disable array-callback-return */
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable padded-blocks */

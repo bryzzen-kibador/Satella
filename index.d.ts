@@ -33,6 +33,8 @@ declare namespace Satella {
            roles: Chest<Role>
            channels: Chest<Channel>
            createSlashCommand(data: SlashCommands): Interaction;
+           kick(id: string): Promise<void>
+           ban(id: string, reason?: string): Promise<void>
        }
        
        interface InteractionOptions {

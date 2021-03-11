@@ -55,6 +55,8 @@ module.exports = class WebSocketManager {
 
             const { t: event, op, d, s } = payload
 
+            //console.log(payload)
+
             switch (op) {
                 case 10:
                     this.lastheat = Date.now()
