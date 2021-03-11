@@ -6,7 +6,6 @@ module.exports = class ClientUser {
     this.id = data.id;
     this.flags = data.flags;
     this.hashtag = `#${data.discriminator}`;
-    this.createAt = new Date(Math.floor(this.id / 4194304) + 1420070400000);
   }
 
   get username() {
