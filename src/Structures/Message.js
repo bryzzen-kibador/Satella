@@ -1,85 +1,84 @@
+const Chest = require("../Utils/Chest");
 const Mentions = require("./Mentions")
 
 module.exports = class Message {
-    constructor(client, data) {
-        //console.log(data)
-        this._client = client
-        this._data = data
-        this.pinned = data.pinned
-        this.tts = data.tts
-        this.referenceMessage = data.referenced_message
-        this.id = data.id
-        this.subject = data.content
-        this.guild = client.guilds.get(data.guild_id)
-        try{
-        this.user = data.author ? client.users.get(data.author.id) : undefined || undefined
-        this.member = this.guild.members.get(data.author.id) || undefined
-        }catch(e){
-            
-        }
-        this.channel = client.channels.get(data.channel_id)
-
-        this.mentions = new Mentions(client, data)
+  constructor(client, data) {
+    this._client = client;
+    this._data = data;
+    this.pinned = data.pinned;
+    this.tts = data.tts;
+    this.referenceMessage = data.referenced_message;
+    this.id = data.id;
+    this.subject = data.content;
+    this.guild = client.guilds.get(data.guild_id);
+    try {
+      this.user = data.author ? client.users.get(data.author.id) : undefined || undefined;
+      this.member = this.guild.members.get(data.author.id) || undefined;
+    } catch (e) {
+      console.log(e);
     }
+    this.channel = client.channels.get(data.channel_id);
 
-    async reply(subject) {
-        let userAgent = `DiscordBot (https://github.com/bryzzen-kibador/Satella, ${require("../../package.json").version})`;
+    this.mentions = new Mentions(client, data)
+  }
 
-        return new Promise((resolve, reject) => {
-            const fetch = require("node-fetch")
+  async reply(subject) {
+    const userAgent = `DiscordBot (https://github.com/bryzzen-kibador/Satella, ${require('../../package.json').version})`;
 
-            let data;
+    return new Promise((resolve, reject) => {
+      const fetch = require('node-fetch');
 
-            if (typeof subject == "string") {
-                data = JSON.stringify({ content: subject, tts: false, message_reference: { message_id: this.id, guild_id: this._data.guild_id } })
-            } else if (typeof subject == "object") {
-                subject.color = subject.color ? parseInt(subject.color.replace("#", ""), 16) : null
-                data = JSON.stringify({ embed: subject, tts: false, message_reference: { message_id: this.id, guild_id: this._data.guild_id } })
-            }
+      let data;
 
-            fetch(`https://discord.com/api/v8/channels/${this._data.channel_id}/messages`, {
-                method: "POST",
-                body: data,
-                headers: {
-                    "Authorization": "Bot " + this._client.token,
-                    "User-Agent": userAgent,
-                    "Content-Type": "application/json"
-                }
-            }).then(res => res.json())
-                .then(json => {
-                    if (json.message) return new Error(json.message)
-                    let msg = new Message(this._client, json)
-                    resolve(msg)
-                })
-        })
-    }
+      if (typeof subject == 'string') {
+        data = JSON.stringify({ content: subject, tts: false, message_reference: { message_id: this.id, guild_id: this._data.guild_id } });
+      } else if (typeof subject == 'object') {
+        subject.color = subject.color ? parseInt(subject.color.replace('#', ''), 16) : null;
+        data = JSON.stringify({ embed: subject, tts: false, message_reference: { message_id: this.id, guild_id: this._data.guild_id } });
+      }
 
-    async createReaction(reaction) {
-        let userAgent = `DiscordBot (https://github.com/bryzzen-kibador/Satella, ${require("../../package.json").version})`;
+      fetch(`https://discord.com/api/v8/channels/${this._data.channel_id}/messages`, {
+        method: 'POST',
+        body: data,
+        headers: {
+          Authorization: `Bot ${this._client.token}`,
+          'User-Agent': userAgent,
+          'Content-Type': 'application/json',
+        },
+      }).then((res) => res.json())
+        .then((json) => {
+          if (json.message) return new Error(json.message);
+          const msg = new Message(this._client, json);
+          resolve(msg);
+        });
+    });
+  }
 
-        return new Promise((resolve, reject) => {
-            let fetch = require("node-fetch")
+  async createReaction(reaction) {
+    const userAgent = `DiscordBot (https://github.com/bryzzen-kibador/Satella, ${require('../../package.json').version})`;
 
-            if (!reaction.id) {
-                fetch(`https://discord.com/api/v8/channels/${this._data.channel_id}/messages/${this._data.id}/reactions/${encodeURIComponent(`${reaction.name}`)}/@me`, {
-                    method: "PUT",
-                    headers: {
-                        "Authorization": "Bot " + this._client.token
-                    }
-                }).then(res => {
-                    if (res.status !== 204) return new Error("An error has happened!")
-                })
-            } else {
+    return new Promise((resolve, reject) => {
+      const fetch = require('node-fetch');
 
-                fetch(`https://discord.com/api/v8/channels/${this._data.channel_id}/messages/${this._data.id}/reactions/${encodeURIComponent(`${reaction.name}:${reaction.id}`)}/@me`, {
-                    method: "PUT",
-                    headers: {
-                        "Authorization": "Bot " + this._client.token
-                    }
-                }).then(res => {
-                    if (res.status !== 204) return new Error("An error has happened!")
-                })
-            }
-        })
-    }
-}
+      if (!reaction.id) {
+        fetch(`https://discord.com/api/v8/channels/${this._data.channel_id}/messages/${this._data.id}/reactions/${encodeURIComponent(`${reaction.name}`)}/@me`, {
+          method: 'PUT',
+          headers: {
+            Authorization: `Bot ${this._client.token}`,
+          },
+        }).then((res) => {
+          if (res.status !== 204) return new Error('An error has happened!');
+        });
+      } else {
+        fetch(`https://discord.com/api/v8/channels/${this._data.channel_id}/messages/${this._data.id}/reactions/${encodeURIComponent(`${reaction.name}:${reaction.id}`)}/@me`, {
+          method: 'PUT',
+          headers: {
+            Authorization: `Bot ${this._client.token}`,
+          },
+        }).then((res) => {
+          if (res.status !== 204) return new Error('An error has happened!');
+        });
+      }
+    });
+  }
+};

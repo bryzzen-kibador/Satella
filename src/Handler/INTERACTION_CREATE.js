@@ -1,7 +1,7 @@
-const Interaction = require("../Structures/Interaction")
+const Interaction = require('../Structures/Interaction');
 
 module.exports = async (client, payload) => {
-   const interaction = new Interaction(client, payload.d)
+  const interaction = new Interaction(client, payload.d);
 
-   client.emit("InteractionCreate", interaction)
-}
+  client.emit('InteractionCreate', interaction);
+};

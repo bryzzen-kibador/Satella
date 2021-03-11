@@ -1,58 +1,58 @@
 module.exports = class Chest extends Map {
-    constructor(base, limit){
-        super()
+  constructor(base, limit) {
+    super();
 
-        this.base = base
-        this.limit = limit ? limit : Infinity
-    }
+    this.base = base;
+    this.limit = limit || Infinity;
+  }
 
-    filter(filter){
-       const array = []
+  filter(filter) {
+    const array = [];
 
-       for(let val of this.values()){
-           if(filter(val)){
-               array.push(val)
-           }
-       }
-
-       return array
-    }
-
-    remove(id){
-      let obj = this.get(id)
-      if(!obj){
-          return;
+    for (const val of this.values()) {
+      if (filter(val)) {
+        array.push(val);
       }
-      this.delete(obj.id)
-      return obj
     }
 
-    find(filter){
-        for(let val of this.values()){
-            if(filter(val)){
-                return val
-            }
-        }
-        return undefined
+    return array;
+  }
+
+  remove(id) {
+    const obj = this.get(id);
+    if (!obj) {
+      return;
+    }
+    this.delete(obj.id);
+    return obj;
+  }
+
+  find(filter) {
+    for (const val of this.values()) {
+      if (filter(val)) {
+        return val;
+      }
+    }
+    return undefined;
+  }
+
+  map(filter) {
+    const array = [];
+
+    for (const val of this.values()) {
+      array.push(filter(val));
     }
 
-    map(filter){
-        let array = []
+    return array;
+  }
 
-        for(let val of this.values()){
-           array.push(filter(val))
-        }
-    
-        return array
-    }
+  first() {
+    return this.values().next().value;
+  }
 
-    first(){
-        return this.values().next().value
+  set(id, object) {
+    if (this.limit && this.limit > this.size) {
+      return super.set(id, object);
     }
-
-    set(id, object){
-        if(this.limit && this.limit > this.size){
-          return super.set(id, object)
-        }
-    }
-}
+  }
+};
