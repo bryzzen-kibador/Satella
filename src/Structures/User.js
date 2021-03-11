@@ -1,6 +1,5 @@
 module.exports = class User {
   constructor(client, data) {
-    // console.log(data)
     this.name = data.username;
     this.hashtag = `#${data.discriminator}`;
     this.flags = data.public_flags;

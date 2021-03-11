@@ -1,5 +1,5 @@
-const Chest = require("../Utils/Chest");
-const Role = require("./Role");
+const Chest = require('../Utils/Chest');
+const Role = require('./Role');
 
 module.exports = class Member {
   constructor(client, data) {
