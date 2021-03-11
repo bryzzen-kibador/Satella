@@ -33,7 +33,11 @@ module.exports = class Message {
       if (typeof subject == 'string') {
         data = JSON.stringify({ content: subject, tts: false, message_reference: { message_id: this.id, guild_id: this._data.guild_id } });
       } else if (typeof subject == 'object') {
+        if(subject.color == "RANDOM"){
+            subject.color = Math.floor(Math.random() * 16777215)
+        }else{
         subject.color = subject.color ? parseInt(subject.color.replace('#', ''), 16) : null;
+        }
         data = JSON.stringify({ embed: subject, tts: false, message_reference: { message_id: this.id, guild_id: this._data.guild_id } });
       }
 
@@ -76,7 +80,7 @@ module.exports = class Message {
             Authorization: `Bot ${this._client.token}`,
           },
         }).then((res) => {
-          if (res.status !== 204) return new Error('An error has happened!');
+          if (res.status !== 204) throw new Error('An error has happened!');
         });
       }
     });

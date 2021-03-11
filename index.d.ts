@@ -92,6 +92,11 @@ declare namespace Satella {
            remove(id: string): T;
        }
 
+       interface Mentions {
+           roles: Chest<Role>
+           users: Chest<User>
+       }
+
        interface Message {
            pinned: boolean
            tts: boolean
@@ -103,6 +108,7 @@ declare namespace Satella {
            guild: Guild
            reply(subject: string | Embed): Promise<Message>
            createReaction(reaction: ReactionOptions): Promise<void>;
+           mentions: Mentions
        }
 
        interface ChannelPermissions {
@@ -129,6 +135,7 @@ declare namespace Satella {
           color: number
           id: string
        }
+
 
        interface footer{
            text: string
@@ -160,9 +167,8 @@ declare namespace Satella {
            options: SlashOptions[]
        }
 
-       interface Embed {
+       export class Embed {
            title?: string
-           type?: string
            description?: string
            url?: string
            timestamp?: number
