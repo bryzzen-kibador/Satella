@@ -13,7 +13,7 @@ module.exports = class Message {
     this.guild = client.guilds.get(data.guild_id);
     try {
       this.user = data.author ? client.users.get(data.author.id) : undefined || undefined;
-      this.member = this.guild.members.get(data.author.id) || undefined;
+      this.member = data.member ? this.guild.members.get(data.author.id) : undefined || undefined;
     } catch (e) {
       console.log(e);
     }

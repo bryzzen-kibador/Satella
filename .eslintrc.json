@@ -35,5 +35,11 @@
         "default-case": "off",
         "eol-last": "off",
         "spaced-comment": "off",
+        "comma-dangle": "off",
+        "quote-props": "off",
+        "import/no-dynamic-require": "off",
+        "no-unreachable": "off",
+        "object-curly-newline": "off",
+        "keyword-spacing": "off"
     }
 }

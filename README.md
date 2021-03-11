@@ -34,7 +34,7 @@ client.on("ready", () => {
     console.log(client.user.username)
 })
 
-client.on("MessageSent", async (message) => {
+client.on("MessageSent",  message => {
     if(message.subject.startsWith("..ping")){
       return message.reply(~~(client.ws.ping)+"ms")
     }
