@@ -5,11 +5,14 @@ module.exports = class User {
     this.flags = data.public_flags;
     this.id = data.id;
     this.avatar = data.avatar;
-    this.creatAt = new Date(Math.floor(this.id / 4194304) + 1420070400000);
   }
 
   get username() {
     return this.name + this.hashtag;
+  }
+
+  get creatAt(){
+      return new Date(Math.floor(this.id / 4194304) + 1420070400000);
   }
 
   avatarURL(options) {
