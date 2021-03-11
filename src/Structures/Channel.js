@@ -1,17 +1,22 @@
 const Chest = require('../Utils/Chest');
 const Message = require('./Message');
+const PermissionsOverwrites = require('./PermissionsOverwrites');
 
 module.exports = class Channel {
   constructor(client, data) {
     this.type = data.type;
     this.topic = data.topic || '';
     this.position = data.position;
-    this.permissionsOverwrites = data.permissions_overwrites ? data.permissions_overwrites : null;
+    this.permissionsOverwrites = new Chest(PermissionsOverwrites)
     this.category = data.parent_id;
     this.name = data.name;
     this.lastMessage = data.last_message_id;
     this.id = data.id;
     this._client = client;
+
+    data.permission_overwrites.forEach(e => [
+      this.permissionsOverwrites.set(e.id, new PermissionsOverwrites(client, e))
+    ])
 
     this.messages = new Chest(Message, client.options.messagesCache);
   }

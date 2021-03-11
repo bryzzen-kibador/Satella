@@ -1,6 +1,5 @@
 /* eslint-disable prefer-const */
 const WebSocket = require('ws');
-const zlib = require("zlib-sync")
 
 module.exports = class WebSocketManager {
   constructor(client, intents) {
