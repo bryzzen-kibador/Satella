@@ -1,5 +1,5 @@
-const Chest = require("../Utils/Chest");
-const Mentions = require("./Mentions")
+const Chest = require('../Utils/Chest');
+const Mentions = require('./Mentions');
 
 module.exports = class Message {
   constructor(client, data) {
@@ -19,7 +19,7 @@ module.exports = class Message {
     }
     this.channel = client.channels.get(data.channel_id);
 
-    this.mentions = new Mentions(client, data)
+    this.mentions = new Mentions(client, data);
   }
 
   async reply(subject) {
