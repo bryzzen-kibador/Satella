@@ -15,6 +15,10 @@ module.exports = class Mentions {
     this.users = new Chest(User);
     if (payload.mentions) {
       payload.mentions.forEach((e) => {
+        if(e.id == client.user.id){
+          this.users.set(client.user.id, client.user)
+          return
+        }
         this.users.set(client.users.get(e.id).id, client.users.get(e.id));
       });
     }

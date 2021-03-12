@@ -21,8 +21,8 @@ module.exports = class User {
       return `https://cdn.discordapp.com/avatars/${this.id}/${this.avatar}.${options ? options.format : 'gif'}`;
     }
 
-    const option = options.format ? 'gif' : 'png';
+    const option = options.format ? options.format : 'png';
 
-    return `https://cdn.discordapp.com/avatars/${this.id}/${this.avatar}.${option}`;
+    return `https://cdn.discordapp.com/avatars/${this.id}/${this.avatar}.${option == "gif" ? "png" : option}`;
   }
 };

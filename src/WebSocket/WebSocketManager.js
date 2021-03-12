@@ -81,14 +81,14 @@ module.exports = class WebSocketManager {
                     throw new Error("Invalid Sesion!")
                     break;
                 case 7:
-                    this.ws.send({
+                    this.ws.send(JSON.stringify({
                         "op": 6,
                         "d": {
                           "token": this.token,
                           "session_id": this.sessionID,
                           "seq": this.seq
                         }
-                      })
+                      }))
                       console.log("[Satella] Reconnecting...")
                     break;
             }

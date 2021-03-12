@@ -6,6 +6,7 @@ module.exports = class ClientUser {
     this.id = data.id;
     this.flags = data.flags;
     this.hashtag = `#${data.discriminator}`;
+    this.bot = data.bot || false
   }
 
   get username() {

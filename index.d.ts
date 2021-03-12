@@ -86,6 +86,7 @@ declare namespace Satella {
            creatAt: number
            hashtag: string
            username: string
+           bot: boolean
            avatarURL(options?: AvatarOptions): string
        }
 
