@@ -24,7 +24,7 @@ module.exports = class Message {
 
     if(this.channel && this.channel.type == 1){
       this.user = this.channel.users.first()
-    }else if(this.channel){
+    }else if(this.channel && this.channel.type != 1){
       try {
         this.user = client.users.get(data.author.id) || undefined;
         this.member = this.guild.members.get(data.author.id) || undefined;

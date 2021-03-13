@@ -132,7 +132,7 @@ declare namespace Satella {
            id: string
            subject: string
            user: User
-           member: Member
+           member: Member | undefined
            guild: Guild
            reply(subject: string | Embed): Promise<Message>
            createReaction(reaction: ReactionOptions): Promise<void>;

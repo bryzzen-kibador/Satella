@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable no-trailing-spaces */
 module.exports = class ClientUser {
   constructor(client, data) {
