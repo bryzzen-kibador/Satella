@@ -16,4 +16,14 @@ module.exports = class ClientUser {
   get createAt(){
     return new Date(Math.floor(this.id / 4194304) + 1420070400000);
   }
+
+  avatarURL(options) {
+    if (this.avatar.startsWith('a_')) {
+      return `https://cdn.discordapp.com/avatars/${this.id}/${this.avatar}.${options ? options.format : 'gif'}`;
+    }
+
+    const option = options.format ? options.format : 'png';
+
+    return `https://cdn.discordapp.com/avatars/${this.id}/${this.avatar}.${option ? option.format == "gif" ? "png" : option.format : "png"}`;
+  }
 };
