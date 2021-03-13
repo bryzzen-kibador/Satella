@@ -11,13 +11,18 @@ module.exports = class Message {
     this.id = data.id;
     this.subject = data.content;
     this.guild = client.guilds.get(data.guild_id);
-    try {
-      this.user = data.author ? client.users.get(data.author.id) : undefined || undefined;
-      this.member = data.member ? this.guild.members.get(data.author.id) : undefined || undefined;
-    } catch (e) {
-      console.log(e);
-    }
     this.channel = client.channels.dmchannels.get(data.channel_id) || client.channels.channels.get(data.channel_id)
+
+    if(this.channel.type == 1){
+      this.user = this.channel.users.first()
+    }else{
+      try {
+        this.user = data.author ? client.users.get(data.author.id) : undefined || undefined;
+        this.member = data.member ? this.guild.members.get(data.author.id) : undefined || undefined;
+      } catch (e) {
+        console.log(e);
+      }
+    }
 
     this.mentions = new Mentions(client, data);
   }
