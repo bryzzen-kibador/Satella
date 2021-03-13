@@ -5,7 +5,7 @@ const Message = require("./Message")
 
 module.exports = class DMChannel {
     constructor(client, data) {
-        this.type = 1
+        this.type = data.type
         this.lastMessage = data.last_message_id
         this.id = data.id
         this.users = new Chest(User)
