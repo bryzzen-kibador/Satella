@@ -26,7 +26,7 @@ module.exports = async (client, payload) => {
   d.channels.forEach((e) => {
     let channel = undefined
 
-    if(parseInt(e.type) === 1){
+    if(e.type == 1){
       channel = new DMChannel(client, e)
       client.channels.dmchannels.set(channel.id, channel);
     }else{

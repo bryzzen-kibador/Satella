@@ -1,3 +1,4 @@
+/* eslint-disable padded-blocks */
 const Chest = require('../Utils/Chest');
 const Mentions = require('./Mentions');
 
@@ -11,7 +12,15 @@ module.exports = class Message {
     this.id = data.id;
     this.subject = data.content;
     this.guild = client.guilds.get(data.guild_id);
-    this.channel = client.channels.dmchannels.get(data.channel_id) || this.guild.channels.get(data.channel_id) || undefined
+    if(client.channels.channels.get(data.channel_id)){
+
+      this.channel = client.channels.channels.get(data.channel_id)
+
+    }else if(client.channels.dmchannels.get(data.channel_id)){
+      this.channel = client.channels.dmchannels.get(data.channel_id)
+    }else{
+      this.channel = undefined
+    }
 
     if(this.channel && this.channel.type == 1){
       this.user = this.channel.users.first()
