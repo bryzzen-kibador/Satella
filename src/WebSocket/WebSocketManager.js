@@ -9,6 +9,7 @@ module.exports = class WebSocketManager {
     this.ws;
     this.url = 'wss://gateway.discord.gg/?v=8&encoding=json';
     this.ping = 0;
+    this.ready = false
   }
 
   async connect(token) {
@@ -60,9 +61,7 @@ module.exports = class WebSocketManager {
             switch (op) {
                 case 10:
                     this.lastheat = Date.now()
-                    this.seq = s
                     this.interval = this.heartbeat(d.heartbeat_interval)
-                    this.sessionID = d.session_id
                     break;
                 case 11:
                     this.lastheat = Date.now()
@@ -71,6 +70,9 @@ module.exports = class WebSocketManager {
                 case 0:
                     this.seq = s
                     try {
+                      if(event === "READY"){
+                        this.sessionID = payload.d.session_id
+                      }
                         const handler = require(`../Handler/${event}.js`)
                         handler(this.client, payload)
                     } catch (e) {

@@ -1,5 +1,5 @@
 module.exports = async (client, payload) => {
-  const channel = client.channels.get(payload.d.channel_id);
+  const channel = client.channels.dmchannels.get(payload.d.channel_id) || client.channels.channels.get(payload.d.channel_id)
   const message = channel.messages.get(payload.d.id);
   channel.messages.remove(message.id);
 

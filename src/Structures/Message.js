@@ -17,7 +17,7 @@ module.exports = class Message {
     } catch (e) {
       console.log(e);
     }
-    this.channel = client.channels.get(data.channel_id);
+    this.channel = client.channels.dmchannels.get(data.channel_id) || client.channels.channels.get(data.channel_id)
 
     this.mentions = new Mentions(client, data);
   }

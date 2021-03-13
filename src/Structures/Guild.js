@@ -10,6 +10,7 @@ const Channel = require('./Channel');
 const Emoji = require('./Emoji');
 const Role = require('./Role');
 const Member = require('./Member');
+const Channels = require('./Channels');
 
 module.exports = class Guild {
   constructor(client, data) {
@@ -24,7 +25,7 @@ module.exports = class Guild {
 
     this.roles = new Chest(Role);
     this._client = client;
-    this.channels = new Chest(Channel);
+    this.channels = new Chest(Channel)
     this.emojis = new Chest(Emoji);
   }
 

@@ -17,9 +17,9 @@ module.exports = class Mentions {
       payload.mentions.forEach((e) => {
         if(e.id == client.user.id){
           this.users.set(client.user.id, client.user)
-          return
-        }
+        }else{
         this.users.set(client.users.get(e.id).id, client.users.get(e.id));
+        }
       });
     }
   }

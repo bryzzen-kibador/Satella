@@ -1,5 +1,9 @@
+/* eslint-disable no-undef-init */
+/* eslint-disable radix */
+/* eslint-disable no-const-assign */
 const Channel = require('../Structures/Channel');
 const ClientUser = require('../Structures/ClientUser');
+const DMChannel = require('../Structures/DMChannel');
 const Emoji = require('../Structures/Emoji');
 
 const Guild = require('../Structures/Guild');
@@ -9,6 +13,7 @@ const Role = require('../Structures/Role');
 const User = require('../Structures/User');
 
 module.exports = async (client, payload) => {
+  if(!client.ws.ready) return;
   const guild = new Guild(client, payload.d);
 
   const { d } = payload;
@@ -19,9 +24,16 @@ module.exports = async (client, payload) => {
   });
 
   d.channels.forEach((e) => {
-    const channel = new Channel(client, e);
-    client.channels.set(channel.id, channel);
-    guild.channels.set(channel.id, channel);
+    let channel = undefined
+
+    if(parseInt(e.type) === 1){
+      channel = new DMChannel(client, e)
+      client.channels.dmchannels.set(channel.id, channel);
+    }else{
+      channel = new Channel(client, e);
+      client.channels.channels.set(channel.id, channel);
+      guild.channels.set(channel.id, channel);
+    }
   });
 
   d.emojis.forEach((e) => {

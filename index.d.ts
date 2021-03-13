@@ -90,6 +90,19 @@ declare namespace Satella {
            avatarURL(options?: AvatarOptions): string
        }
 
+       interface DMChannel {
+           lastMessage: string
+           id: string
+           users: Chest<User>
+           messages: Chest<Message>
+           send(subject: string | Embed): Promise<Message>
+       }
+
+       interface Channels {
+         dmchannels: Chest<DMChannel>
+         channels: Chest<Channel>
+       }
+
        interface ReactionOptions {
            name: string
            id?: string
@@ -115,7 +128,7 @@ declare namespace Satella {
        interface Message {
            pinned: boolean
            tts: boolean
-           referenceMessage?: string
+           referenceMessage?: string | undefined
            id: string
            subject: string
            user: User
@@ -212,6 +225,7 @@ declare namespace Satella {
            guilds: Chest<Guild>
            roles: Chest<Role>
            emojis: Chest<Emoji>
+           channels: Channels
            ws: WebSocket
        }
 }
