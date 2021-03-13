@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 module.exports = class User {
   constructor(client, data) {
     this.name = data.username;
@@ -23,6 +24,6 @@ module.exports = class User {
 
     const option = options.format ? options.format : 'png';
 
-    return `https://cdn.discordapp.com/avatars/${this.id}/${this.avatar}.${option ? option.format == "gif" ? "png" : option.format : "png"}`;
+    return `https://cdn.discordapp.com/avatars/${this.id}/${this.avatar}.${options ? options.format == "gif" ? "png" : options.format : 'png'}`;
   }
 };
