@@ -1,6 +1,6 @@
 {
   "name": "satella",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "Satella - A wrapper for the Discord API made in JS",
   "main": "index.js",
   "scripts": {},
