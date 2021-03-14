@@ -14,7 +14,7 @@ module.exports = class Message {
     this.subject = data.content;
     this.guild = client.guilds.get(data.guild_id) || undefined
     this.channel = client.channels.channels.get(data.channel_id)
-    this.user = client.users.get(data.author.id)
+    this.user = client.users.get(data.author.id) ? client.users.get(data.author.id) : undefined
     this.member = this.guild ? this.guild.members.get(data.author.id) : undefined
 
     this.mentions = new Mentions(client, data);
