@@ -4,6 +4,7 @@ const Mentions = require('./Mentions');
 
 module.exports = class Message {
   constructor(client, data) {
+    //console.log(data)
     this._client = client;
     this._data = data;
     this.pinned = data.pinned;
@@ -11,27 +12,10 @@ module.exports = class Message {
     this.referenceMessage = data.referenced_message;
     this.id = data.id;
     this.subject = data.content;
-    this.guild = client.guilds.get(data.guild_id);
-    if(client.channels.channels.get(data.channel_id)){
-
-      this.channel = client.channels.channels.get(data.channel_id)
-
-    }else if(client.channels.dmchannels.get(data.channel_id)){
-      this.channel = client.channels.dmchannels.get(data.channel_id)
-    }else{
-      this.channel = undefined
-    }
-
-    if(this.channel && this.channel.type == 1){
-      this.user = this.channel.users.first()
-    }else if(this.channel && this.channel.type != 1){
-      try {
-        this.user = client.users.get(data.author.id) || undefined;
-        this.member = this.guild.members.get(data.author.id) || undefined;
-      } catch (e) {
-        console.log(e);
-      }
-    }
+    this.guild = client.guilds.get(data.guild_id) || undefined
+    this.channel = client.channels.channels.get(data.channel_id)
+    this.user = client.users.get(data.author.id)
+    this.member = this.guild.members.get(data.author.id)
 
     this.mentions = new Mentions(client, data);
   }

@@ -25,6 +25,6 @@ module.exports = class ClientUser {
 
     const option = options.format ? options.format : 'png';
 
-    return `https://cdn.discordapp.com/avatars/${this.id}/${this.avatar}.${option ? option.format == "gif" ? "png" : option.format : "png"}`;
+    return `https://cdn.discordapp.com/avatars/${this.id}/${this.avatar}.${options ? options.format == "gif" ? "png" : options.format : 'png'}`;
   }
 };

@@ -24,16 +24,9 @@ module.exports = async (client, payload) => {
   });
 
   d.channels.forEach((e) => {
-    let channel = undefined
-
-    if(e.type == 1){
-      channel = new DMChannel(client, e)
-      client.channels.dmchannels.set(channel.id, channel);
-    }else{
-      channel = new Channel(client, e);
-      client.channels.channels.set(channel.id, channel);
-      guild.channels.set(channel.id, channel);
-    }
+    let channel = new Channel(client, e);
+    client.channels.channels.set(channel.id, channel);
+    guild.channels.set(channel.id, channel);
   });
 
   d.emojis.forEach((e) => {
@@ -43,10 +36,11 @@ module.exports = async (client, payload) => {
   });
 
   d.members.forEach((e) => {
-    if (e.user.id == client.user.id) return;
-    guild.members.set(e.user.id, new Member(client, e));
+    if(client.user.id != e.id){
     const user = new User(client, e.user);
     client.users.set(user.id, user);
+    }
+    guild.members.set(e.user.id, new Member(client, e));
   });
 
   if (client._guilds.includes(payload.d.id)) {
