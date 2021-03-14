@@ -21,6 +21,7 @@ module.exports = class Embed {
         this.author = data.author || null
 
         this.thumbnail = data.color || null
+        this.image = data.image || null
     }
 
     setTitle(title) {
@@ -35,6 +36,15 @@ module.exports = class Embed {
     }
 
     setThumbnail(url, options) {
+        if (options && options.height && options.width) {
+            this.thumbnail = { url, proxy_url: url, height: options.height, width: options.width }
+        } else {
+            this.thumbnail = { url, proxy_url: url }
+        }
+        return this
+    }
+
+    setImage(url, options) {
         if (options && options.height && options.width) {
             this.thumbnail = { url, proxy_url: url, height: options.height, width: options.width }
         } else {

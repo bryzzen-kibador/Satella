@@ -205,6 +205,16 @@ declare namespace Satella {
            options?: ThumbnailOptions
        }
 
+       interface ImageOptions {
+        width: string
+        height: string
+     }
+
+     interface Image {
+         url: string,
+         options?: ImageOptions
+     }
+
        export class Embed {
            title?: string
            description?: string
@@ -214,6 +224,7 @@ declare namespace Satella {
            footer?: footer
            fields?: field[]
            thumbnail?: Thumbnail
+           image?: Image
        }
 
        interface Emoji {
