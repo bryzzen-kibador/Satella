@@ -1,49 +1,54 @@
 const Color = require("./Color")
 
 module.exports = class Embed {
-    constructor(data){
-        this.title = data.title || ""
-        this.description = data.description || ""
+    constructor(data) {
+        this.title = data.title || null
+        this.description = data.description || null
         this.fields = []
-        if(data.fields){
-        this.fields = data.fields
+        if (data.fields) {
+            this.fields = data.fields
         }
 
-        this.url = data.url || ""
-        this.color = data.color || ""
-        if(this.color == "RANDOM"){
-            // eslint-disable-next-line space-infix-ops
-            this.color = Math.floor(Math.random()*16777215)
-        }else{
-            this.color = parseInt(this.color.replace("#", ""), 16)
-        }
+        this.url = data.url || null
+        this.color = parseInt(new Color(data.color).hsl, 16) || null
 
         this.timestamp = data.timestamp || 0
 
         // eslint-disable-next-line object-curly-spacing
-        this.footer = data.footer || {text: "", icon_url: ""}
+        this.footer = data.footer || null
 
         // eslint-disable-next-line object-curly-spacing
-        this.author = data.author || {name: "", url: ""}
+        this.author = data.author || null
+
+        this.thumbnail = data.color || null
     }
 
-    setTitle(title){
+    setTitle(title) {
         this.title = title
         return this
     }
 
-    setColor(color){
-        if(!new Color(color).valid) throw new Error("Invalid Color!")
+    setColor(color) {
+        if (!new Color(color).valid) throw new Error("Invalid Color!")
         this.color = parseInt(new Color(color).hsl, 16)
         return this;
     }
 
-    setDescription(description){
+    setThumbnail(url, options) {
+        if (options && options.height && options.width) {
+            this.thumbnail = { url, proxy_url: url, height: options.height, width: options.width }
+        } else {
+            this.thumbnail = { url, proxy_url: url }
+        }
+        return this
+    }
+
+    setDescription(description) {
         this.description = description
         return this;
     }
 
-    addField(name, value, inline){
+    addField(name, value, inline) {
         this.fields.push({
             name,
             value,
@@ -52,13 +57,13 @@ module.exports = class Embed {
         return this;
     }
 
-    setUrl(url){
+    setUrl(url) {
         this.url = url
         return this
     }
 
     // eslint-disable-next-line camelcase
-    setFooter(text, icon_url){
+    setFooter(text, icon_url) {
         this.footer = {
             text,
             icon_url
@@ -66,7 +71,7 @@ module.exports = class Embed {
         return this;
     }
 
-    setAuthor(name, url){
+    setAuthor(name, url) {
         this.author = {
             name,
             url,
@@ -75,10 +80,10 @@ module.exports = class Embed {
         return this;
     }
 
-    setTimestamp(time){
-        if(!time){
-           this.timestamp = Date.now()
-        }else{
+    setTimestamp(time) {
+        if (!time) {
+            this.timestamp = Date.now()
+        } else {
             this.timestamp = time
         }
         return this;
