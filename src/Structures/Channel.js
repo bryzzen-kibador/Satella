@@ -32,7 +32,6 @@ module.exports = class Channel {
       if (typeof subject == 'string') {
         data = JSON.stringify({ content: subject, tts: false });
       } else if (typeof subject == 'object') {
-        subject.color = subject.color ? parseInt(subject.color.replace('#', ''), 16) : null;
         data = JSON.stringify({ embed: subject, tts: false });
       }
 

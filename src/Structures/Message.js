@@ -15,7 +15,7 @@ module.exports = class Message {
     this.guild = client.guilds.get(data.guild_id) || undefined
     this.channel = client.channels.channels.get(data.channel_id)
     this.user = data.author ? client.users.get(data.author.id) : undefined
-    this.member = this.guild ? this.guild.members.get(data.author.id) : undefined
+    this.member = data.author && this.guild ? this.guild.members.get(data.author.id) : undefined
 
     this.mentions = new Mentions(client, data);
   }
@@ -31,11 +31,6 @@ module.exports = class Message {
       if (typeof subject == 'string') {
         data = JSON.stringify({ content: subject, tts: false, message_reference: { message_id: this.id, guild_id: this._data.guild_id } });
       } else if (typeof subject == 'object') {
-        if(subject.color == "RANDOM"){
-            subject.color = Math.floor(Math.random() * 16777215)
-        }else{
-        subject.color = subject.color ? parseInt(subject.color.replace('#', ''), 16) : null;
-        }
         data = JSON.stringify({ embed: subject, tts: false, message_reference: { message_id: this.id, guild_id: this._data.guild_id } });
       }
 

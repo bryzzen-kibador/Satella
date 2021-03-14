@@ -1,3 +1,5 @@
+const Color = require("./Color")
+
 module.exports = class Embed {
     constructor(data){
         this.title = data.title || ""
@@ -31,11 +33,8 @@ module.exports = class Embed {
     }
 
     setColor(color){
-        if(color == "RANDOM"){
-            this.color = Math.floor(Math.random() * 16777215)
-        }else{
-            this.color = parseInt(color.replace("#", ""), 16)
-        }
+        if(!new Color(color).valid) throw new Error("Invalid Color!")
+        this.color = parseInt(new Color(color).hsl, 16)
         return this;
     }
 

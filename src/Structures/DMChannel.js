@@ -17,6 +17,8 @@ module.exports = class DMChannel {
             }
         })
 
+        this._client = client
+
         this.messages = new Chest(Message, client.options.messagesCache || 100);
     }
 
