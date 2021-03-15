@@ -1,6 +1,4 @@
 /* eslint-disable no-bitwise */
-/* eslint-disable max-len */
-/* eslint-disable no-undef */
 const permissions = {
   CREATE_INSTANT_INVITE: 0x00000001,
   KICK_MEMBERS: 0x00000002,
@@ -38,11 +36,23 @@ const permissions = {
 module.exports = class PermissionsOverwrites {
   constructor(client, data) {
     this.permissionsAllow = [];
-    Object.entries(permissions).filter(([, bit]) => (data.allow & bit) === bit).map(([field]) => this.permissionsAllow.push(field));
-    this.permissionsAllow = this.permissionsAllow.filter((e, i) => this.permissionsAllow.indexOf(e) === i);
+
+    Object.entries(permissions).filter(
+      ([, bit]) => (data.allow & bit) === bit,
+    ).map(([field]) => this.permissionsAllow.push(field));
+
+    this.permissionsAllow = this.permissionsAllow.filter(
+      (e, i) => this.permissionsAllow.indexOf(e) === i,
+    );
 
     this.permissionsDeny = [];
-    Object.entries(permissions).filter(([, bit]) => (data.deny & bit) === bit).map(([field]) => this.permissionsDeny.push(field));
-    this.permissionsDeny = this.permissionsDeny.filter((e, i) => this.permissionsDeny.indexOf(e) === i);
+
+    Object.entries(permissions).filter(
+      ([, bit]) => (data.deny & bit) === bit,
+    ).map(([field]) => this.permissionsDeny.push(field));
+
+    this.permissionsDeny = this.permissionsDeny.filter(
+      (e, i) => this.permissionsDeny.indexOf(e) === i,
+    );
   }
 };

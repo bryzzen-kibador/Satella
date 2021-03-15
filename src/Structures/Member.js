@@ -1,5 +1,4 @@
 /* eslint-disable no-bitwise */
-/* eslint-disable max-len */
 /* eslint-disable prefer-const */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable array-callback-return */
@@ -44,17 +43,22 @@ const permissions = {
 
 module.exports = class Member {
   constructor(client, data) {
-    // console.log(data)
     this.nick = data.nick ? data.nick : data.user.username;
     this.id = data.user.id;
     this.joinedAt = data.joined_at;
+
     this.roles = new Chest(Role);
+
     this.permissions = [];
 
     data.roles.map((e) => this.roles.set(e, client.roles.get(e)));
+
     this.roles.map((r) => {
-      Object.entries(permissions).filter(([, bit]) => (r.permissions & bit) === bit).map(([field]) => this.permissions.push(field));
+      Object.entries(permissions).filter(
+        ([, bit]) => (r.permissions & bit) === bit,
+      ).map(([field]) => this.permissions.push(field));
     });
+
     this.permissions = this.permissions.filter((e, i) => this.permissions.indexOf(e) === i);
     
   }

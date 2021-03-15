@@ -1,17 +1,15 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable global-require */
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-underscore-dangle */
-
 module.exports = class Interaction {
   constructor(client, data) {
     this.interacitonId = data.id;
     this.type = data.type;
     this.user = client.users.get(data.member.user.id ? data.member.user.id : '0');
+
     this.guild = client.guilds.get(data.guild_id);
     this.name = data.data.name;
     this.interactionToken = data.token;
+
     this._client = client;
+
     if (data.data.options) {
       this.options = data.data.options;
     }

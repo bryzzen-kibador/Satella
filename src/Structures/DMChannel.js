@@ -1,9 +1,3 @@
-/* eslint-disable consistent-return */
-/* eslint-disable no-unused-vars */
-/* eslint-disable global-require */
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable no-undef */
 const Chest = require('../Utils/Chest');
 const User = require('./User');
 const Message = require('./Message');
@@ -12,8 +6,10 @@ module.exports = class DMChannel {
   constructor(client, data) {
     this.type = data.type;
     this.lastMessage = data.last_message_id;
+
     this.id = data.id;
     this.users = new Chest(User);
+
     data.recipients.forEach((e) => {
       if (e.id === client.user.id) {
         this.users.set(client.user.id, client.user);
@@ -23,7 +19,6 @@ module.exports = class DMChannel {
     });
 
     this._client = client;
-
     this.messages = new Chest(Message, client.options.messagesCache || 100);
   }
 

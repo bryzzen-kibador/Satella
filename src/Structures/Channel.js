@@ -1,8 +1,3 @@
-/* eslint-disable consistent-return */
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-unused-vars */
-/* eslint-disable global-require */
-/* eslint-disable no-underscore-dangle */
 const Chest = require('../Utils/Chest');
 const Embed = require('../Utils/Embed');
 const Message = require('./Message');
@@ -13,10 +8,13 @@ module.exports = class Channel {
     this.type = data.type;
     this.topic = data.topic || '';
     this.position = data.position;
+
     this.permissionsOverwrites = new Chest(PermissionsOverwrites);
     this.category = data.parent_id;
+
     this.name = data.name;
     this.lastMessage = data.last_message_id;
+
     this.id = data.id;
     this._client = client;
 

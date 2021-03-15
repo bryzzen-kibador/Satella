@@ -8,20 +8,24 @@ const Mentions = require('./Mentions');
 
 module.exports = class Message {
   constructor(client, data) {
-    // console.log(data)
     this._client = client;
     this._data = data;
     this.pinned = data.pinned;
+
     this.tts = data.tts;
     this.referenceMessage = data.referenced_message;
     this.id = data.id;
+
     this.subject = data.content;
+
     if (data.author && data.author.id !== client.user.id) {
       this.guild = client.guilds.get(data.guild_id);
       this.channel = client.channels.channels.get(data.channel_id);
+
       if (data.author) this.user = data.author.id === client.user.id ? client.user : client.users.get(data.author.id);
       if (data.author) this.member = client.guilds.get(data.guild_id).members.get(data.author.id);
     }
+
     this.mentions = new Mentions(client, data);
   }
 
@@ -51,6 +55,7 @@ module.exports = class Message {
         .then((json) => {
           if (json.message) throw new Error(json.message);
           const msg = new Message(this._client, json);
+
           resolve(msg);
         });
     });

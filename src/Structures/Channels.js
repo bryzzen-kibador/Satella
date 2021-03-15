@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 const Chest = require('../Utils/Chest');
 const Channel = require('./Channel');
 const DMChannel = require('./DMChannel');

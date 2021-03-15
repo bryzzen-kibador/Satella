@@ -8,12 +8,13 @@ module.exports = async (client, payload) => {
 
     const message = channel.messages.get(payload.d.id);
     channel.messages.remove(payload.d.id);
+    console.log(message.id);
     channel.messages.set(message.id, new Message(client, payload.d));
 
     const messageNew = channel.messages.get(payload.d.id);
 
-    client.emit('MessageEdit', (message, messageNew));
+    client.emit('MessageEdit', message, messageNew);
   } else {
-    client.emit('MessageEdit', (null, null));
+    client.emit('MessageEdit', null, null);
   }
 };
