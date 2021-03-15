@@ -1,10 +1,3 @@
-/* eslint-disable consistent-return */
-/* eslint-disable no-unused-expressions */
-/* eslint-disable no-console */
-/* eslint-disable no-unreachable */
-/* eslint-disable global-require */
-/* eslint-disable import/no-dynamic-require */
-/* eslint-disable default-case */
 const WebSocket = require('ws');
 
 module.exports = class WebSocketManager {
@@ -70,10 +63,12 @@ module.exports = class WebSocketManager {
         case 10:
           this.lastheat = Date.now();
           this.interval = this.heartbeat(d.heartbeat_interval);
+
           break;
         case 11:
           this.lastheat = Date.now();
           this.ping = this.lastheat - this.lastheatSent;
+
           break;
         case 0:
           this.seq = s;
@@ -81,7 +76,7 @@ module.exports = class WebSocketManager {
             if (event === 'READY') {
               this.sessionID = payload.d.session_id;
             }
-            const handler = require(`../Handler/${event}.js`);
+            const handler = require(`../../Handler/${event}.js`);
             handler(this.client, payload);
           } catch (e) {
             // console.log(e)
@@ -89,7 +84,7 @@ module.exports = class WebSocketManager {
           break;
         case 9:
           throw new Error('Invalid Sesion!');
-          break;
+
         case 7:
           this.ws.send(JSON.stringify({
             op: 6,
@@ -99,7 +94,9 @@ module.exports = class WebSocketManager {
               seq: this.seq,
             },
           }));
+
           console.log('[Satella] Reconnecting...');
+
           break;
       }
     });

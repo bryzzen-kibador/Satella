@@ -1,5 +1,3 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable consistent-return */
 module.exports = class Chest extends Map {
   constructor(base, limit) {
     super();

@@ -1,12 +1,8 @@
-/* eslint-disable no-undef-init */
-/* eslint-disable radix */
-/* eslint-disable no-const-assign */
 const Channel = require('../Structures/Channel');
 const Emoji = require('../Structures/Emoji');
-
 const Guild = require('../Structures/Guild');
-const Role = require('../Structures/Role');
 
+const Role = require('../Structures/Role');
 const User = require('../Structures/User');
 
 module.exports = async (client, payload) => {

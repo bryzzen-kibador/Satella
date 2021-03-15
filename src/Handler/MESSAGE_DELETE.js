@@ -1,9 +1,9 @@
-/* eslint-disable max-len */
 module.exports = async (client, payload) => {
-  if (!payload.d.channel_id) return;
-  if (!payload.d.id) return;
+  if (!payload.d.channel_id || !payload.d.id) return;
+
   const channel = client.channels.dmchannels.get(payload.d.channel_id) || client.channels.channels.get(payload.d.channel_id);
   if (!channel) return;
+
   const message = channel.messages.get(payload.d.id);
   channel.messages.remove(message.id);
 

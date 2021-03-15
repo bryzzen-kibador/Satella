@@ -1,16 +1,12 @@
-/* eslint-disable no-shadow */
-/* eslint-disable consistent-return */
-/* eslint-disable no-mixed-operators */
-/* eslint-disable max-len */
-/* eslint-disable no-bitwise */
-/* eslint-disable no-unused-expressions */
-/* eslint-disable prefer-object-spread */
 const event = require('events');
 const Chest = require('../Utils/Chest');
-const WebSocketManager = require('../WebSocket/WebSocketManager');
+
+const WebSocketManager = require('./websocket/WebSocketManager');
+
 const Guild = require('../Structures/Guild');
 const User = require('../Structures/User');
 const Role = require('../Structures/Role');
+
 const Emoji = require('../Structures/Emoji');
 const Channels = require('../Structures/Channels');
 
@@ -45,10 +41,9 @@ module.exports = class Client extends event {
   constructor(options) {
     super();
 
-    this.options = Object.assign({
-      intents: Object.values(intentsFlags).reduce((f, i) => f | i, 0) & ~intentsFlags.GUILD_MEMBERS | intentsFlags.GUILD_PRESENCES,
+    this.options = { intents: Object.values(intentsFlags).reduce((f, i) => f | i, 0) & ~intentsFlags.GUILD_MEMBERS | intentsFlags.GUILD_PRESENCES,
       messagesCache: 100,
-    }, options);
+      ...options };
 
     this.ws = new WebSocketManager(this, this.options.intents);
 
@@ -56,7 +51,6 @@ module.exports = class Client extends event {
 
     this.guilds = new Chest(Guild);
     this.users = new Chest(User);
-
     this.roles = new Chest(Role);
 
     this.channels = new Channels(this);

@@ -4,20 +4,13 @@ module.exports = class Embed {
   constructor(data) {
     this.title = data.title || null;
     this.description = data.description || null;
-    this.fields = [];
-    if (data.fields) {
-      this.fields = data.fields;
-    }
+    this.fields = data.fields || [];
 
     this.url = data.url || null;
     this.color = parseInt(new Color(data.color).hsl, 16) || null;
 
     this.timestamp = data.timestamp || 0;
-
-    // eslint-disable-next-line object-curly-spacing
     this.footer = data.footer || null;
-
-    // eslint-disable-next-line object-curly-spacing
     this.author = data.author || null;
 
     this.thumbnail = data.color || null;
@@ -95,11 +88,8 @@ module.exports = class Embed {
   }
 
   setTimestamp(time) {
-    if (!time) {
-      this.timestamp = Date.now();
-    } else {
-      this.timestamp = time;
-    }
+    this.timestamp = time || Date.now();
+
     return this;
   }
 };
