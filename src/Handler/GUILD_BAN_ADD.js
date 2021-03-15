@@ -1,7 +1,7 @@
 /* eslint-disable no-trailing-spaces */
 module.exports = async (client, payload) => {
-    let member = client.guilds.get(payload.d.guild_id).members.get(payload.d.user.id)
-    client.users.remove(payload.d.user.id)
-    client.guilds.get(payload.d.guild_id).members.remove(payload.d.user.id)
-    client.emit("MemberRemove", member)
-}
+  const member = client.guilds.get(payload.d.guild_id).members.get(payload.d.user.id);
+  client.users.remove(payload.d.user.id);
+  client.guilds.get(payload.d.guild_id).members.remove(payload.d.user.id);
+  client.emit('MemberRemove', member);
+};

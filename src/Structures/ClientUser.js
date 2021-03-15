@@ -7,14 +7,14 @@ module.exports = class ClientUser {
     this.id = data.id;
     this.flags = data.flags;
     this.hashtag = `#${data.discriminator}`;
-    this.bot = data.bot || false
+    this.bot = data.bot || false;
   }
 
   get username() {
     return this.name + this.hashtag;
   }
   
-  get createAt(){
+  get createAt() {
     return new Date(Math.floor(this.id / 4194304) + 1420070400000);
   }
 
@@ -22,9 +22,6 @@ module.exports = class ClientUser {
     if (this.avatar.startsWith('a_')) {
       return `https://cdn.discordapp.com/avatars/${this.id}/${this.avatar}.${options ? options.format : 'gif'}`;
     }
-
-    const option = options.format ? options.format : 'png';
-
-    return `https://cdn.discordapp.com/avatars/${this.id}/${this.avatar}.${options ? options.format == "gif" ? "png" : options.format : 'png'}`;
+    return `https://cdn.discordapp.com/avatars/${this.id}/${this.avatar}.${options ? options.format === 'gif' ? 'png' : options.format : 'png'}`;
   }
 };

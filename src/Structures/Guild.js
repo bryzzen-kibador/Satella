@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable global-require */
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable array-callback-return */
 /* eslint-disable space-infix-ops */
 /* eslint-disable prefer-template */
@@ -11,7 +14,6 @@ const Channel = require('./Channel');
 const Emoji = require('./Emoji');
 const Role = require('./Role');
 const Member = require('./Member');
-const Channels = require('./Channels');
 
 module.exports = class Guild {
   constructor(client, data) {
@@ -23,23 +25,23 @@ module.exports = class Guild {
     this.joinedAt = data.joined_at;
 
     this.roles = new Chest(Role);
-    data.roles.map(e => {
-      this.roles.set(e.id, new Role(client, e))
-    })
+    data.roles.map((e) => {
+      this.roles.set(e.id, new Role(client, e));
+    });
     this.members = new Chest(Member);
-    data.members.map(e => {
-      this.members.set(e.user.id, new Member(client, e))
-    })
+    data.members.map((e) => {
+      this.members.set(e.user.id, new Member(client, e));
+    });
     this._client = client;
 
-    this.channels = new Chest(Channel)
-    data.channels.map(e => {
-      this.channels.set(e.id, new Channel(client, e))
-    })
+    this.channels = new Chest(Channel);
+    data.channels.map((e) => {
+      this.channels.set(e.id, new Channel(client, e));
+    });
     this.emojis = new Chest(Emoji);
-    data.emojis.map(e => {
-      this.emojis.set(e.id, new Emoji(client, e))
-    })
+    data.emojis.map((e) => {
+      this.emojis.set(e.id, new Emoji(client, e));
+    });
 
   }
 
@@ -54,7 +56,7 @@ module.exports = class Guild {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {
-        "Authorization": `Bot ${this._client.ws.token}`,
+        Authorization: `Bot ${this._client.ws.token}`,
         'User-Agent': userAgent,
         'Content-Type': 'application/json',
       },
@@ -62,45 +64,45 @@ module.exports = class Guild {
   }
 
   async kick(id) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, _reject) => {
       const userAgent = `DiscordBot (https://github.com/bryzzen-kibador/Satella, ${require('../../package.json').version})`;
       const url = `https://discord.com/api/v8/guilds/${this.id}/members/${id}`;
 
-      const fetch = require("node-fetch")
+      const fetch = require('node-fetch');
 
       fetch(url, {
-        method: "DELETE",
+        method: 'DELETE',
         headers: {
-          "Authorization": "Bot " + this._client.token,
-          "User-Agent": userAgent,
-          'Content-Type': 'application/json'
-        }
-      }).then(res => {
-        if (res.status !== 204) throw new Error("An error has happened!")
-        resolve(null)
-      })
-    })
+          Authorization: 'Bot ' + this._client.token,
+          'User-Agent': userAgent,
+          'Content-Type': 'application/json',
+        },
+      }).then((res) => {
+        if (res.status !== 204) throw new Error('An error has happened!');
+        resolve(null);
+      });
+    });
   }
 
   async ban(id, reason) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, _reject) => {
       const userAgent = `DiscordBot (https://github.com/bryzzen-kibador/Satella, ${require('../../package.json').version})`;
       const url = `https://discord.com/api/v8/guilds/${this.id}/bans/${id}`;
 
-      const fetch = require("node-fetch")
+      const fetch = require('node-fetch');
 
       fetch(url, {
-        method: "PUT",
-        body: JSON.stringify({ reason: reason || "" }),
+        method: 'PUT',
+        body: JSON.stringify({ reason: reason || '' }),
         headers: {
-          "Authorization": "Bot " + this._client.token,
-          "User-Agent": userAgent,
-          'Content-Type': 'application/json'
-        }
-      }).then(res => {
-        if (res.status !== 204) throw new Error("An error has happened!")
-        resolve(null)
-      })
-    })
+          Authorization: 'Bot ' + this._client.token,
+          'User-Agent': userAgent,
+          'Content-Type': 'application/json',
+        },
+      }).then((res) => {
+        if (res.status !== 204) throw new Error('An error has happened!');
+        resolve(null);
+      });
+    });
   }
 };

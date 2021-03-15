@@ -1,5 +1,7 @@
-const Member = require('./Member');
-const Message = require('./Message');
+/* eslint-disable no-unused-vars */
+/* eslint-disable global-require */
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-underscore-dangle */
 
 module.exports = class Interaction {
   constructor(client, data) {
@@ -10,22 +12,22 @@ module.exports = class Interaction {
     this.name = data.data.name;
     this.interactionToken = data.token;
     this._client = client;
-    if(data.data.options){
-      this.options = data.data.options
+    if (data.data.options) {
+      this.options = data.data.options;
     }
   }
 
   async reply(subject) {
     const userAgent = `DiscordBot (https://github.com/bryzzen-kibador/Satella, ${require('../../package.json').version})`;
 
-    return new Promise((resolve, reject) => {
+    return new Promise((_resolve, _reject) => {
       const fetch = require('node-fetch');
 
       let data = '';
 
-      if (typeof subject == 'string') {
+      if (typeof subject === 'string') {
         data = JSON.stringify({ type: 4, data: { content: subject } });
-      } else if (typeof subject == 'object') {
+      } else if (typeof subject === 'object') {
         subject.color = subject.color ? parseInt(subject.color.replace('#', ''), 16) : null;
         data = JSON.stringify({ type: 4, data: { embed: subject } });
       }

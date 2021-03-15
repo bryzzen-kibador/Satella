@@ -1,3 +1,5 @@
+/* eslint-disable no-bitwise */
+/* eslint-disable max-len */
 /* eslint-disable prefer-const */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable array-callback-return */
@@ -37,23 +39,23 @@ const permissions = {
   MANAGE_NICKNAMES: 0x08000000,
   MANAGE_ROLES: 0x10000000,
   MANAGE_WEBHOOKS: 0x20000000,
-  MANAGE_EMOJIS: 0x40000000
-}
+  MANAGE_EMOJIS: 0x40000000,
+};
 
 module.exports = class Member {
   constructor(client, data) {
-    //console.log(data)
+    // console.log(data)
     this.nick = data.nick ? data.nick : data.user.username;
     this.id = data.user.id;
     this.joinedAt = data.joined_at;
     this.roles = new Chest(Role);
-    this.permissions = []
+    this.permissions = [];
 
     data.roles.map((e) => this.roles.set(e, client.roles.get(e)));
-    this.roles.map(r => {
-      Object.entries(permissions).filter(([, bit]) => (r.permissions & bit) == bit).map(([field]) => this.permissions.push(field))
-    })
-    this.permissions = this.permissions.filter((e, i) => this.permissions.indexOf(e) == i)
+    this.roles.map((r) => {
+      Object.entries(permissions).filter(([, bit]) => (r.permissions & bit) === bit).map(([field]) => this.permissions.push(field));
+    });
+    this.permissions = this.permissions.filter((e, i) => this.permissions.indexOf(e) === i);
     
   }
 };

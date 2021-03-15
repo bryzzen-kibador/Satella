@@ -1,4 +1,10 @@
-/* eslint-disable prefer-const */
+/* eslint-disable consistent-return */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-console */
+/* eslint-disable no-unreachable */
+/* eslint-disable global-require */
+/* eslint-disable import/no-dynamic-require */
+/* eslint-disable default-case */
 const WebSocket = require('ws');
 
 module.exports = class WebSocketManager {
@@ -9,7 +15,7 @@ module.exports = class WebSocketManager {
     this.ws;
     this.url = 'wss://gateway.discord.gg/?v=8&encoding=json';
     this.ping = 0;
-    this.ready = false
+    this.ready = false;
   }
 
   async connect(token) {
@@ -44,66 +50,68 @@ module.exports = class WebSocketManager {
       console.log(err);
     });
 
-        this.ws.on("message", async (msg) => {
-            /*let i = new zlib.Inflate()
+    this.ws.on('message', async (msg) => {
+      /* let i = new zlib.Inflate()
             i.push(msg)
 
             console.log(i.result)
 
-            const payload = String(i.result)*/
+            const payload = String(i.result) */
 
-            const payload = JSON.parse(msg.toString())
+      const payload = JSON.parse(msg.toString());
 
-            const { t: event, op, d, s } = payload
+      const {
+        t: event, op, d, s,
+      } = payload;
 
-            //console.log(payload)
+      // console.log(payload)
 
-            switch (op) {
-                case 10:
-                    this.lastheat = Date.now()
-                    this.interval = this.heartbeat(d.heartbeat_interval)
-                    break;
-                case 11:
-                    this.lastheat = Date.now()
-                    this.ping = this.lastheat - this.lastheatSent
-                    break;
-                case 0:
-                    this.seq = s
-                    try {
-                      if(event === "READY"){
-                        this.sessionID = payload.d.session_id
-                      }
-                        const handler = require(`../Handler/${event}.js`)
-                        handler(this.client, payload)
-                    } catch (e) {
-                        //console.log(e)
-                    }
-                    break;
-                case 9:
-                    throw new Error("Invalid Sesion!")
-                    break;
-                case 7:
-                    this.ws.send(JSON.stringify({
-                        "op": 6,
-                        "d": {
-                          "token": this.token,
-                          "session_id": this.sessionID,
-                          "seq": this.seq
-                        }
-                      }))
-                      console.log("[Satella] Reconnecting...")
-                    break;
+      switch (op) {
+        case 10:
+          this.lastheat = Date.now();
+          this.interval = this.heartbeat(d.heartbeat_interval);
+          break;
+        case 11:
+          this.lastheat = Date.now();
+          this.ping = this.lastheat - this.lastheatSent;
+          break;
+        case 0:
+          this.seq = s;
+          try {
+            if (event === 'READY') {
+              this.sessionID = payload.d.session_id;
             }
-        })
-    }
+            const handler = require(`../Handler/${event}.js`);
+            handler(this.client, payload);
+          } catch (e) {
+            // console.log(e)
+          }
+          break;
+        case 9:
+          throw new Error('Invalid Sesion!');
+          break;
+        case 7:
+          this.ws.send(JSON.stringify({
+            op: 6,
+            d: {
+              token: this.token,
+              session_id: this.sessionID,
+              seq: this.seq,
+            },
+          }));
+          console.log('[Satella] Reconnecting...');
+          break;
+      }
+    });
+  }
 
-    heartbeat(ms) {
-        return setInterval(() => {
-            this.lastheatSent = Date.now()
-            this.ws.send(JSON.stringify({
-                op: 1,
-                d: this.seq
-            }))
-        }, ms)
-    }
-}
+  heartbeat(ms) {
+    return setInterval(() => {
+      this.lastheatSent = Date.now();
+      this.ws.send(JSON.stringify({
+        op: 1,
+        d: this.seq,
+      }));
+    }, ms);
+  }
+};

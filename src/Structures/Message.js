@@ -1,11 +1,14 @@
+/* eslint-disable consistent-return */
+/* eslint-disable global-require */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable max-len */
 /* eslint-disable padded-blocks */
-const Chest = require('../Utils/Chest');
 const Mentions = require('./Mentions');
-const Embed = require("../Utils/Embed")
 
 module.exports = class Message {
   constructor(client, data) {
-    //console.log(data)
+    // console.log(data)
     this._client = client;
     this._data = data;
     this.pinned = data.pinned;
@@ -13,11 +16,11 @@ module.exports = class Message {
     this.referenceMessage = data.referenced_message;
     this.id = data.id;
     this.subject = data.content;
-    if(data.author && data.author.id !== client.user.id){
-    this.guild = client.guilds.get(data.guild_id)
-    this.channel = client.channels.channels.get(data.channel_id)
-    if(data.author) this.user = data.author.id == client.user.id ? client.user : client.users.get(data.author.id)
-    if(data.author) this.member = client.guilds.get(data.guild_id).members.get(data.author.id)
+    if (data.author && data.author.id !== client.user.id) {
+      this.guild = client.guilds.get(data.guild_id);
+      this.channel = client.channels.channels.get(data.channel_id);
+      if (data.author) this.user = data.author.id === client.user.id ? client.user : client.users.get(data.author.id);
+      if (data.author) this.member = client.guilds.get(data.guild_id).members.get(data.author.id);
     }
     this.mentions = new Mentions(client, data);
   }
@@ -25,14 +28,14 @@ module.exports = class Message {
   async reply(subject) {
     const userAgent = `DiscordBot (https://github.com/bryzzen-kibador/Satella, ${require('../../package.json').version})`;
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, _reject) => {
       const fetch = require('node-fetch');
 
       let data;
 
-      if (typeof subject == 'string') {
+      if (typeof subject === 'string') {
         data = JSON.stringify({ content: subject, tts: false, message_reference: { message_id: this.id, guild_id: this._data.guild_id } });
-      }else if (typeof subject == 'object') {
+      } else if (typeof subject === 'object') {
         data = JSON.stringify({ embed: subject, tts: false, message_reference: { message_id: this.id, guild_id: this._data.guild_id } });
       }
 
