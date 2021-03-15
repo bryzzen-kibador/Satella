@@ -1,4 +1,5 @@
 const Chest = require('../Utils/Chest');
+const Embed = require('../Utils/Embed');
 const Message = require('./Message');
 const PermissionsOverwrites = require('./PermissionsOverwrites');
 
@@ -32,6 +33,7 @@ module.exports = class Channel {
       if (typeof subject == 'string') {
         data = JSON.stringify({ content: subject, tts: false });
       } else if (typeof subject == 'object') {
+        subject = new Embed(subject)
         data = JSON.stringify({ embed: subject, tts: false });
       }
 

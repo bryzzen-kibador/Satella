@@ -1,6 +1,7 @@
 /* eslint-disable padded-blocks */
 const Chest = require('../Utils/Chest');
 const Mentions = require('./Mentions');
+const Embed = require("../Utils/Embed")
 
 module.exports = class Message {
   constructor(client, data) {
@@ -12,10 +13,10 @@ module.exports = class Message {
     this.referenceMessage = data.referenced_message;
     this.id = data.id;
     this.subject = data.content;
-    this.guild = client.guilds.get(data.guild_id) || undefined
+    this.guild = client.guilds.get(data.guild_id)
     this.channel = client.channels.channels.get(data.channel_id)
-    this.user = data.author ? client.users.get(data.author.id) : undefined
-    this.member = data.author && this.guild ? this.guild.members.get(data.author.id) : undefined
+    this.user = client.users.get(data.author.id)
+    this.member = this.guild.members.get(data.author.id)
 
     this.mentions = new Mentions(client, data);
   }
@@ -31,6 +32,7 @@ module.exports = class Message {
       if (typeof subject == 'string') {
         data = JSON.stringify({ content: subject, tts: false, message_reference: { message_id: this.id, guild_id: this._data.guild_id } });
       } else if (typeof subject == 'object') {
+        subject = new Embed({subject})
         data = JSON.stringify({ embed: subject, tts: false, message_reference: { message_id: this.id, guild_id: this._data.guild_id } });
       }
 

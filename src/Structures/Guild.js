@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable space-infix-ops */
 /* eslint-disable prefer-template */
 /* eslint-disable object-curly-spacing */
@@ -22,11 +23,24 @@ module.exports = class Guild {
     this.joinedAt = data.joined_at;
 
     this.members = new Chest(Member);
+    data.members.map(e => {
+      this.members.set(e.user.id, new Member(client, data))
+    })
 
     this.roles = new Chest(Role);
+    data.roles.map(e => {
+      this.roles.set(e.id, new Role(client, e))
+    })
     this._client = client;
+
     this.channels = new Chest(Channel)
+    data.channels.map(e => {
+      this.channels.set(e.id, new Channel(client, e))
+    })
     this.emojis = new Chest(Emoji);
+    data.emojis.map(e => {
+      this.emojis.set(e.id, new Emoji(client, e))
+    })
   }
 
   createSlashCommand(data) {

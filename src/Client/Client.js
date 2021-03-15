@@ -49,7 +49,6 @@ module.exports = class Client extends event {
 
     this.user;
 
-    this._guilds = [];
 
     this.guilds = new Chest(Guild);
     this.users = new Chest(User);
