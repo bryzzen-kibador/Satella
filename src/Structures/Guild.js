@@ -22,14 +22,13 @@ module.exports = class Guild {
     this.id = data.id;
     this.joinedAt = data.joined_at;
 
-    this.members = new Chest(Member);
-    data.members.map(e => {
-      this.members.set(e.user.id, new Member(client, data))
-    })
-
     this.roles = new Chest(Role);
     data.roles.map(e => {
       this.roles.set(e.id, new Role(client, e))
+    })
+    this.members = new Chest(Member);
+    data.members.map(e => {
+      this.members.set(e.user.id, new Member(client, e))
     })
     this._client = client;
 
@@ -41,6 +40,7 @@ module.exports = class Guild {
     data.emojis.map(e => {
       this.emojis.set(e.id, new Emoji(client, e))
     })
+
   }
 
   createSlashCommand(data) {
@@ -61,7 +61,7 @@ module.exports = class Guild {
     });
   }
 
-  async kick(id){
+  async kick(id) {
     return new Promise((resolve, reject) => {
       const userAgent = `DiscordBot (https://github.com/bryzzen-kibador/Satella, ${require('../../package.json').version})`;
       const url = `https://discord.com/api/v8/guilds/${this.id}/members/${id}`;
@@ -76,13 +76,13 @@ module.exports = class Guild {
           'Content-Type': 'application/json'
         }
       }).then(res => {
-        if(res.status !== 204) throw new Error("An error has happened!")
+        if (res.status !== 204) throw new Error("An error has happened!")
         resolve(null)
       })
     })
   }
 
-  async ban(id, reason){
+  async ban(id, reason) {
     return new Promise((resolve, reject) => {
       const userAgent = `DiscordBot (https://github.com/bryzzen-kibador/Satella, ${require('../../package.json').version})`;
       const url = `https://discord.com/api/v8/guilds/${this.id}/bans/${id}`;
@@ -91,14 +91,14 @@ module.exports = class Guild {
 
       fetch(url, {
         method: "PUT",
-        body: JSON.stringify({reason: reason || ""}),
+        body: JSON.stringify({ reason: reason || "" }),
         headers: {
-          "Authorization": "Bot "+this._client.token,
+          "Authorization": "Bot " + this._client.token,
           "User-Agent": userAgent,
           'Content-Type': 'application/json'
         }
       }).then(res => {
-        if(res.status !== 204) throw new Error("An error has happened!")
+        if (res.status !== 204) throw new Error("An error has happened!")
         resolve(null)
       })
     })

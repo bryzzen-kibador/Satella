@@ -13,11 +13,12 @@ module.exports = class Message {
     this.referenceMessage = data.referenced_message;
     this.id = data.id;
     this.subject = data.content;
+    if(data.author && data.author.id !== client.user.id){
     this.guild = client.guilds.get(data.guild_id)
     this.channel = client.channels.channels.get(data.channel_id)
-    this.user = client.users.get(data.author.id)
-    this.member = this.guild.members.get(data.author.id)
-
+    if(data.author) this.user = data.author.id == client.user.id ? client.user : client.users.get(data.author.id)
+    if(data.author) this.member = client.guilds.get(data.guild_id).members.get(data.author.id)
+    }
     this.mentions = new Mentions(client, data);
   }
 
@@ -31,8 +32,7 @@ module.exports = class Message {
 
       if (typeof subject == 'string') {
         data = JSON.stringify({ content: subject, tts: false, message_reference: { message_id: this.id, guild_id: this._data.guild_id } });
-      } else if (typeof subject == 'object') {
-        subject = new Embed({subject})
+      }else if (typeof subject == 'object') {
         data = JSON.stringify({ embed: subject, tts: false, message_reference: { message_id: this.id, guild_id: this._data.guild_id } });
       }
 

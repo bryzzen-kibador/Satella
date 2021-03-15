@@ -24,8 +24,10 @@ module.exports = async (client, payload) => {
         channel.messages.set(payload.d.id, new DMMessage(client, payload.d))
         return client.emit('MessageSent', new DMMessage(client, payload.d));
       })
-  } else if (channel.type != 1) {
+  } else if (channel && channel.type != 1) {
     const message = new Message(client, payload.d)
+    if(!message.channel) return;
+    if(!message.channel.messages) return;
     message.channel.messages.set(payload.d.id, message);
     return client.emit('MessageSent', message);
   } else if (channel && channel.type == 1) {

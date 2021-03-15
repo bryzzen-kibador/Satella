@@ -42,6 +42,7 @@ const permissions = {
 
 module.exports = class Member {
   constructor(client, data) {
+    //console.log(data)
     this.nick = data.nick ? data.nick : data.user.username;
     this.id = data.user.id;
     this.joinedAt = data.joined_at;

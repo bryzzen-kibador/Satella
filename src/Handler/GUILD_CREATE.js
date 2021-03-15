@@ -14,15 +14,6 @@ const User = require('../Structures/User');
 
 module.exports = async (client, payload) => {
   if(!client.ws.ready) return;
-  const guild = new Guild(client, payload.d);
-
-  if(client.guilds.has(guild.id)){
-    client.guilds.remove(guild.id)
-    client.guilds.set(guild.id, guild)
-  }else{
-    client.guilds.set(guild.id, guild)
-    client.emit("NewGuild", guild)
-  }
 
   const { d } = payload;
 
@@ -46,4 +37,13 @@ module.exports = async (client, payload) => {
     client.users.set(user.id, user);
     }
   });
+
+  const guild = new Guild(client, payload.d);
+  if(client.guilds.has(guild.id)){
+    client.guilds.remove(guild.id)
+    client.guilds.set(guild.id, guild)
+  }else{
+    client.guilds.set(guild.id, guild)
+    client.emit("NewGuild", guild)
+  }
 };

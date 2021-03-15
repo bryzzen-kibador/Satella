@@ -215,7 +215,7 @@ declare namespace Satella {
          options?: ImageOptions
      }
 
-       export class Embed {
+    export class Embed {
            title?: string
            description?: string
            url?: string
@@ -225,6 +225,16 @@ declare namespace Satella {
            fields?: field[]
            thumbnail?: Thumbnail
            image?: Image
+           setTitle(string: string): Embed
+           setDescription(string: string): Embed
+           setUrl(url: string): Embed
+           setTimestamp(Date?: string): Embed
+           setColor(color: string | number): Embed
+           setFooter(text: string, url: string): Embed
+           addField(name: string, value: string, inline: boolean): Embed
+           setThumbnail(url: string, options: ThumbnailOptions): Embed
+           setImage(url: string, options: ImageOptions): Embed
+           setAuthor(name: string, icon: string): Embed
        }
 
        interface Emoji {
